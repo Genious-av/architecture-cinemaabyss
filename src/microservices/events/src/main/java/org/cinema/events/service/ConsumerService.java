@@ -24,19 +24,19 @@ public class ConsumerService {
     public void consume(ConsumerRecord<String, String> record) throws JsonProcessingException {
 
         switch (record.topic()) {
-            case "movie-events" -> {
+            case "movie-events-topic" -> {
                 MovieEventRequest event =
                         objectMapper.readValue(record.value(), MovieEventRequest.class);
                 log.info("Movie event: {}", event);
             }
 
-            case "user-events" -> {
+            case "user-events-topic" -> {
                 UserEventRequest event =
                         objectMapper.readValue(record.value(), UserEventRequest.class);
                 log.info("User event: {}", event);
             }
 
-            case "payment-events" -> {
+            case "payment-events-topic" -> {
                 PaymentEventRequest event =
                         objectMapper.readValue(record.value(), PaymentEventRequest.class);
                 log.info("Payment event: {}", event);
