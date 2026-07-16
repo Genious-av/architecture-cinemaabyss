@@ -15,12 +15,12 @@ import java.util.concurrent.ExecutionException;
 @RequiredArgsConstructor
 public class ProducerService {
 
-    private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper mapper;
 
     public RecordMetadata send(
             String topic,
-            Object event
+            String event
     ) throws ExecutionException, InterruptedException {
 
         return kafkaTemplate.send(
@@ -34,7 +34,7 @@ public class ProducerService {
     public EventResponse createPaymentEvent(PaymentEventRequest request) {
 
         try {
-            RecordMetadata metadata = send("payment-events-topic", request);
+            RecordMetadata metadata = send("payment-events-topic", mapper.writeValueAsString(request));
             Event payment = new Event(request.getPaymentId(), "payment", Instant.now(), mapper.writeValueAsString(request));
             return new EventResponse("success", metadata.partition(), metadata.offset(), payment);
         } catch (JsonProcessingException | ExecutionException | InterruptedException ex) {
@@ -44,7 +44,7 @@ public class ProducerService {
 
     public EventResponse createUserEvent(UserEventRequest request) {
         try {
-            RecordMetadata metadata = send("user-events-topic", request);
+            RecordMetadata metadata = send("user-events-topic", mapper.writeValueAsString(request));
             Event user = new Event(request.getUserId(), "user", Instant.now(), mapper.writeValueAsString(request));
             return new EventResponse("success", metadata.partition(), metadata.offset(), user);
         } catch (JsonProcessingException | ExecutionException | InterruptedException ex) {
@@ -54,7 +54,7 @@ public class ProducerService {
 
     public EventResponse createMovieEvent(MovieEventRequest request) {
         try {
-            RecordMetadata metadata = send("movie-events-topic", request);
+            RecordMetadata metadata = send("movie-events-topic", mapper.writeValueAsString(request));
             Event movie = new Event(request.getMovieId(), "movie", Instant.now(), mapper.writeValueAsString(request));
             return new EventResponse("success", metadata.partition(), metadata.offset(), movie);
         } catch (JsonProcessingException | ExecutionException | InterruptedException ex) {

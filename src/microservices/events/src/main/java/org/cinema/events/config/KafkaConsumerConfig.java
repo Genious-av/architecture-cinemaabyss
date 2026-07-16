@@ -17,7 +17,7 @@ public class KafkaConsumerConfig {
 
 
     @Bean
-    public ConsumerFactory<String, Object> consumerFactory(@Value("${KAFKA_BROKERS}") String brokers) {
+    public ConsumerFactory<String, String> consumerFactory(@Value("${KAFKA_BROKERS}") String brokers) {
 
         Map<String, Object> props = new HashMap<>();
 
@@ -38,7 +38,7 @@ public class KafkaConsumerConfig {
 
         props.put(
                 ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
-                JsonDeserializer.class
+                StringDeserializer.class
         );
 
         props.put(
@@ -51,10 +51,10 @@ public class KafkaConsumerConfig {
 
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainerFactory(@Value("${KAFKA_BROKERS}") String brokers) {
+    public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory(@Value("${KAFKA_BROKERS}") String brokers) {
 
         var factory =
-                new ConcurrentKafkaListenerContainerFactory<String, Object>();
+                new ConcurrentKafkaListenerContainerFactory<String, String>();
 
         factory.setConsumerFactory(consumerFactory(brokers));
 
