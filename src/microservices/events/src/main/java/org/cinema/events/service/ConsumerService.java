@@ -17,9 +17,9 @@ public class ConsumerService {
     ObjectMapper objectMapper = new ObjectMapper();
 
     @KafkaListener(topics = {
-            "movie-events",
-            "user-events",
-            "payment-events"
+            "movie-events-topic",
+            "user-events-topic",
+            "payment-events-topic"
     })
     public void consume(ConsumerRecord<String, String> record) throws JsonProcessingException {
 
