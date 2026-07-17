@@ -5,8 +5,9 @@
 1. Спроектируйте to be архитектуру КиноБездны, разделив всю систему на отдельные домены и организовав интеграционное взаимодействие и единую точку вызова сервисов.
 Результат представьте в виде контейнерной диаграммы в нотации С4.
 Добавьте ссылку на файл в этот шаблон
-[ссылка на файл](ссылка)
 
+Диаграмма контейнеров сервиса в нотации C4
+![img_3.png](diagrams/img_3.png)
 # Задание 2
 
 ### 1. Proxy
@@ -59,6 +60,12 @@
 Необходимые тесты для проверки этого API вызываются при запуске npm run test:local из папки tests/postman 
 Приложите скриншот тестов и скриншот состояния топиков Kafka из UI http://localhost:8090 
 
+Скриншот тестов
+![img.png](diagrams/img.png)
+
+Скриншот состояния топиков
+![img.png](diagrams/kafka_topic_state.png)
+
 # Задание 3
 
 Команда начала переезд в Kubernetes для лучшего масштабирования и повышения надежности. 
@@ -109,7 +116,11 @@ jobs:
 Как только сборка отработает и в github registry появятся ваши образы, можно переходить к блоку настройки Kubernetes
 Успешным результатом данного шага является "зеленая" сборка и "зеленые" тесты
 
+Результат сборки
+![](diagrams/git_build_result.png)
 
+Результат тестов
+![](diagrams/git_test_results.png)
 ### Proxy в Kubernetes
 
 #### Шаг 1
@@ -275,7 +286,11 @@ cat .docker/config.json | base64
 #### Шаг 3
 Добавьте сюда скриншота вывода при вызове https://cinemaabyss.example.com/api/movies и  скриншот вывода event-service после вызова тестов.
 
+Результаты запроса https://cinemaabyss.example.com/api/movies
+![Запрос на получение списка фильмов](diagrams/movies_request.png)
 
+Логи events-service
+![Логи консьюмера кафки](diagrams/kafka_consumer_logs.png)
 # Задание 4
 Для простоты дальнейшего обновления и развертывания вам как архитектуру необходимо так же реализовать helm-чарты для прокси-сервиса и проверить работу 
 
@@ -350,6 +365,12 @@ minikube tunnel
 https://cinemaabyss.example.com/api/movies
 и приложите скриншот развертывания helm и вывода https://cinemaabyss.example.com/api/movies
 
+Скриншот развертывания helm
+![img.png](diagrams/helm_install.png)
+
+Запрос https://cinemaabyss.example.com/api/movies
+
+![img_1.png](diagrams/helm_movie_request.png)
 ## Удаляем все
 
 ```bash
